@@ -1,0 +1,22 @@
+<form class="signup-form" action="<?=buildUrl('signup');?>" method="POST">
+    <fieldset>
+        <legend>Créez votre compte</legend>
+        <div>
+            <label for="firstname">Prénom</label>
+            <input type="text" name="firstname" id="firstname" value="<?=$firstname;?>">
+        </div>
+        <div>
+            <label for="lastname">Nom</label>
+            <input type="text" name="lastname" id="lastname" value="<?=$lastname;?>">
+        </div>
+        <div>
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" value="<?=$email;?>">
+        </div>
+        <div>
+            <label for="password">Mot de passe</label>
+            <input type="text" name="password" id="password">
+        </div>
+    </fieldset>
+    <input type="submit" value="Enregistrer">
+</form>

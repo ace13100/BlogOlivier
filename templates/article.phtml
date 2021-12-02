@@ -1,0 +1,38 @@
+<section id="page-article"></section>
+<article>
+    <h2><?= $article['title'];?></h2>
+    <small><?= (new DateTimeImmutable($article['created_at']))->format('d/m/Y') ;?></small>
+    <p><?= $article['content'];?></p>
+</article>
+
+<!-- Affichage du formulaire d'ajout de commentaire seulement si l'utilisateur est connecté -->
+<?php if (App\Framework\UserSession::isAuthenticated()):?>
+    <form id="add-comment-form" action ="<?=buildUrl('add-comment');?>" method="POST">
+        <input type="hidden" name="article-id" value="<?=$article['article_id'];?>">
+        <fieldset>
+            <legend>Ajouter un commentaire</legend>
+            <div>
+                <label for="content">Commentaire</label>
+                <textarea required id="content" name="content"></textarea>
+            </div>
+            <input type="submit" value="Envoyer">
+        </fieldset>
+    </form>
+<?php else: ?>
+    <p><a href="<?=buildUrl('login');?>">Connectez-vous</a> pour ajouter un commentaire.</p>
+<?php endif; ?>
+
+<!-- Affichage des commentaires -->
+<?php if ($comments): ?>
+    <ul id="comments-list">
+        <?php foreach ($comments as $comment): ?>
+            <li>
+                <h3>Ajouté par <?=htmlspecialchars($comment['firstname'] . ' ' . $comment['lastname']);?> 
+                    le <?=(new DateTimeImmutable($comment['created_at']))->format('d/m/Y');?></h3>
+                <p><?=$comment['content'];?></p>
+            </li>
+        <?php endforeach; ?>
+    </ul>
+<?php endif; ?>
+<script src="<?=asset('js/article.js');?>"></script>
+

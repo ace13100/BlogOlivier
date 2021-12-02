@@ -1,0 +1,8 @@
+<!-- Code HTML d'un commentaire --> 
+<li>
+    <h3>Ajouté par <?=htmlspecialchars($comment['firstname'] . ' ' . $comment['lastname']);?> le <?=(new DateTimeImmutable($comment['created_at']))->format('d/m/Y');?></h3>
+    <p><?=$comment['content'];?></p>
+</li>
+
+<!-- // Envoi du code HTML du commentaire ajouté -->
+<? include TEMPLATE_DIR . '/comment.phtml'; exit; ?>
