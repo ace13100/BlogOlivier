@@ -1,0 +1,65 @@
+<?php 
+use App\Framework\UserSession;
+?>
+
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="<?=SITE_BASE_URL;?>/css/style.css">
+    
+    <title>MFW</title>
+</head>
+
+<body>
+    
+
+    
+    <header class="Menu">
+        <figure class="Menu-logo">
+            <a href="<?= buildUrl('homepage')?>"><img class="Menu-logo-img" src="<?=SITE_BASE_URL;?>/img/logo.png" alt="" srcset=""></a>
+            
+        </figure>
+        <form action="" method="post" class="Menu-C">
+            <input type="search" name="search" id="search" class="Menu-C-search">
+            <button type="submit" class="Menu-C-button"></button>
+
+
+        </form>
+
+        <?php if (!UserSession::isAuthenticated()): ?>
+        <section class="Menu-login">
+            <a class="Menu-login-lien" href="<?= buildUrl('login')?>">Log In</a>
+            
+        </section>
+
+        <section class="Menu-signup">
+            <a class="Menu-signup-lien" href="<?= buildUrl('signup')?>">Sign Up</a>
+        </section>
+        <?php else: ?>
+            <!-- Menu en mode connecté -->
+
+            <section class="Menu-login">
+            <a class="Menu-login-lien" href="<?= buildUrl('logout')?>">Déconnexion</a>
+            
+            </section>
+
+        <section class="Menu-signup">
+            <?php if(UserSession::hasRoles('ADMIN')):?>
+            <a class="Menu-signup-lien" href="<?= buildUrl('admin')?>">administration</a>
+            <?php endif;?>
+            <?php if(UserSession::hasRoles('USER')):?>
+            <a class="Menu-signup-lien" href="<?= buildUrl('user')?>">Mon espace</a>
+            <?php endif;?>
+        </section>
+           
+            
+            
+            
+        <?php endif; ?>
+        
+
+    
+    </header>

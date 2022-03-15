@@ -14,8 +14,8 @@ class AccountController extends AbstractController {
         if (!empty($_POST)) {
 
             // On récupère les données du formulaire dans des variables
-            $firstname = trim($_POST['firstname']);
-            $lastname = trim($_POST['lastname']);
+            
+            $pseudo = trim($_POST['pseudo']);
             $email = trim($_POST['email']);
             $password = trim($_POST['password']);
 
@@ -23,12 +23,13 @@ class AccountController extends AbstractController {
             $userModel = new UserModel();
 
             // Validation du formulaire : pour chaque erreur on ajoute un mesage flash
-            if (!$firstname) {
-                FlashBag::addFlash('Le champ "Prénom" est obligatoire','error');
-            }
 
-            if (!$lastname) {
-                FlashBag::addFlash('Le champ "Nom" est obligatoire','error');
+
+            if (!$pseudo) {
+                FlashBag::addFlash('Le champ "pseudo" est obligatoire','error');
+            }
+            elseif ($userModel->getUserByPseudo($pseudo)) {
+                FlashBag::addFlash('Il existe déjà un compte avec ce pseudo','error');    
             }
 
             if (!$email) {
@@ -41,10 +42,10 @@ class AccountController extends AbstractController {
 
             if (!$password) {
                 FlashBag::addFlash('Le champ "Mot de passe" est obligatoire','error');
-            } elseif (strlen($email) < 8) {
+            } elseif (strlen($password) < 8) {
                 FlashBag::addFlash('Le champ "Mot de passe" doit faire au moins 8 caractères','error');
             }
-
+            
             // Si il n'y a pas d'erreur (donc pas de message flash de type 'error')
             if (!FlashBag::hasMessages('error')) {
 
@@ -52,7 +53,7 @@ class AccountController extends AbstractController {
                 $hash = password_hash($password, PASSWORD_DEFAULT);
 
                 // On fait appel au UserModel pour insérer les données dans la table user
-                $userId = $userModel->insertUser($firstname, $lastname, $email, $hash); 
+                $userId = $userModel->insertUser($hash,$pseudo, $email ); 
 
                 $userModel->addRole($userId, UserModel::ROLE_USER);
 
@@ -62,12 +63,12 @@ class AccountController extends AbstractController {
                 // On redirige l'internaute pour l'instant vers la page d'accueil
                 $this->redirect('homepage');
             }
+            
         }
 
         // Affichage
         return $this->render('signup', [
-            'firstname' => $firstname??'',
-            'lastname' => $lastname??'',
+            'pseudo' => $pseudo??'',
             'email' => $email??''
         ]);
     }

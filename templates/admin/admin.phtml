@@ -2,24 +2,24 @@
     <h2>Dashboard</h2>
 
     <nav>
-        <a class="btn" href="<?=buildUrl('admin_article_new');?>"><i class="fas fa-plus-square"></i> Ajouter un article</a>
+        <a class="btn" href="<?=buildUrl('user_picture_new');?>"><i class="fas fa-plus-square"></i> Ajouter un article</a>
     </nav>
 
     <table> 
         <thead>
             <th>#</th>
             <th>Date de création</th>
-            <th>Auteur</th>
-            <th>Titre</th>
+            <th>nom</th>
+            <th>descritpion</th>
             <th>Actions</th>
         </thead>
         <tbody>
-            <?php foreach ($articles as $article): ?>
-                <tr id="article-<?=$article['article_id']?>">
-                    <td><?=intval($article['article_id']);?></td>
-                    <td><?=(new DateTimeImmutable($article['created_at']))->format('d/m/Y');?></td>
-                    <td><?=$article['firstname']?><?=$article['lastname']?></td>
-                    <td><?=htmlspecialchars($article['title']);?></td>
+            <?php foreach ($pictures as $picture): ?>
+                <tr id="article-<?=$picture['pictureId']?>">
+                    <td><?=intval($picture['pictureId']);?></td>
+                    <td><?=(new DateTimeImmutable($picture['createdAt']))->format('d/m/Y');?></td>
+                    <td><?=$picture['namePicture']?></td>
+                    <td><?=htmlspecialchars($article['descriptionPicture']);?></td>
                     <td>
                         
                             <a href="<?=buildUrl('admin_article_edit', ['article_id' => $article['article_id']]);?>" title="Modifier"><i class="far fa-edit"></i></a>

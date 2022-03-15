@@ -1,22 +1,33 @@
-<form class="signup-form" action="<?=buildUrl('signup');?>" method="POST">
-    <fieldset>
-        <legend>Créez votre compte</legend>
-        <div>
-            <label for="firstname">Prénom</label>
-            <input type="text" name="firstname" id="firstname" value="<?=$firstname;?>">
-        </div>
-        <div>
-            <label for="lastname">Nom</label>
-            <input type="text" name="lastname" id="lastname" value="<?=$lastname;?>">
-        </div>
-        <div>
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email" value="<?=$email;?>">
-        </div>
-        <div>
-            <label for="password">Mot de passe</label>
-            <input type="text" name="password" id="password">
-        </div>
-    </fieldset>
-    <input type="submit" value="Enregistrer">
-</form>
+
+
+
+
+
+<section class="signup">
+    <p class="signup-title">Sign Up</p>
+    <form class="signup-form" action="<?=buildUrl('signup');?>" method="POST">
+        
+            <div class="signup-form-pseudo">
+                <label for="pseudo">pseudo</label>
+                <input type="text" name="pseudo" id="pseudo" value="<?=$pseudo??"";?>" placeholder="pseudo">
+            </div>
+            <div class="signup-form-email">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" value="<?=$email;?>" placeholder="email">
+            </div>
+            <div class="signup-form-password">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" placeholder="password">
+            </div>
+            <div class="signup-form-repeatPassword">
+                <label for="RepeatPassword">Repeat password</label>
+                <input type="password" name="RepeatPassword" id="RepeatPassword" placeholder="repeat pasword">
+            </div>
+            <div id="signup-form-register">
+
+            <input id="signup-form-register-enter" type="submit" value="register">
+            </div>
+        
+    </form>
+
+</section>

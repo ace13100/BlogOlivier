@@ -3,7 +3,7 @@
 /**
  * On définit le tableau des routes : on associe à chaque route un fichier PHP 
  * qui jouera la rôle de contrôleur. Par exemple pour la page d'accueil, c'est un fichier home.php
- * qui sera inclus. Pour la page Article, ce sera un fichier article.php, etc
+ * qui sera inclus. Pour la page Images, ce sera un fichier Picture.php, etc
  */
 $routes = [
 
@@ -14,18 +14,13 @@ $routes = [
         'method' => 'index'
     ],
 
-    // Route de la page Article
-    'article' => [
-        'path' => '/article',
-        'controller' => 'Article',
+    // Route de la page des Images
+    'picture' => [
+        'path' => '/Picture',
+        'controller' => 'Picture',
         'method' => 'index'
     ],
 
-    'add-comment' => [
-        'path' => '/add-comment',
-        'controller' => 'Article',
-        'method' => 'addComment'
-    ],
 
     'signup' => [
         'path' => '/signup',
@@ -51,21 +46,47 @@ $routes = [
         'method' => 'index'
     ],
 
-    'admin_article_new' => [
-        'path' => '/admin/article/new',
-        'controller' => 'Admin\\Article',
+    'admin_picture_new' => [
+        'path' => '/admin/picture/new',
+        'controller' => 'Admin\\Picture',
         'method' => 'new'
     ],
 
-    'admin_article_edit' => [
+    'admin_picture_edit' => [
         'path' => '/admin/article/edit',
-        'controller' => 'Admin\\Article',
+        'controller' => 'Admin\\Picture',
         'method' => 'edit'
     ],
 
-    'admin_article_delete' => [
+    'admin_picture_delete' => [
         'path' => '/admin/article/delete',
-        'controller' => 'Admin\\Article',
+        'controller' => 'Admin\\Picture',
+        'method' => 'delete'
+    ],
+
+
+
+    'user' => [
+        'path' => '/user',
+        'controller' => 'User\\User',
+        'method' => 'index'
+    ],
+
+    'user_picture_new' => [
+        'path' => '/user/picture/new',
+        'controller' => 'User\\Picture',
+        'method' => 'new'
+    ],
+
+    'user_picture_edit' => [
+        'path' => '/user/picture/edit',
+        'controller' => 'user\\Picture',
+        'method' => 'edit'
+    ],
+
+    'user_picture_delete' => [
+        'path' => '/user/picture/delete',
+        'controller' => 'User\\Picture',
         'method' => 'delete'
     ]
 

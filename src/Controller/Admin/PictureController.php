@@ -4,11 +4,11 @@ namespace App\Controller\Admin;
 
 use App\Framework\AbstractController;
 use App\Model\CategoryModel;
-use App\Model\ArticleModel;
+use App\Model\PictureModel;
 use App\Framework\FlashBag;
 use App\Framework\UserSession;
 
-class ArticleController extends AbstractController {
+class PictureController extends AbstractController {
 
     /**
      * Création d'un nouvel article
@@ -40,7 +40,7 @@ class ArticleController extends AbstractController {
             if (!FlashBag::hasMessages('error')) {
 
                 // On enregistre les données dans la base
-                $articleModel = new ArticleModel();
+                $articleModel = new PictureModel();
                 $articleModel->insert($title, $content, $category, UserSession::getId());
 
                 // Message flash
@@ -81,7 +81,7 @@ class ArticleController extends AbstractController {
         $articleId = (int) $_GET['article_id'];
 
         // Création d'un objet ArticleModel dont on aura besoin dans tous les cas
-        $articleModel = new ArticleModel();
+        $articleModel = new PictureModel();
 
         // Si le formulaire est soumis... 
         if (!empty($_POST)) {
@@ -159,7 +159,7 @@ class ArticleController extends AbstractController {
         $articleId = (int) $_GET['article_id'];
 
         // Suppression de l'article
-        $articleModel = new ArticleModel();
+        $articleModel = new PictureModel();
         $articleModel->delete($articleId);
 
         // Message flash

@@ -5,6 +5,7 @@ namespace App\Controller\Admin;
 use App\Framework\AbstractController;
 use App\Framework\UserSession;
 use App\Model\ArticleModel;
+use App\Model\PictureModel;
 
 class AdminController extends AbstractController {
 
@@ -19,7 +20,7 @@ class AdminController extends AbstractController {
             exit;
         }
         return $this->render('admin/admin', [
-            'articles' => (new ArticleModel())->getAllArticles()
+            'pictures' => (new PictureModel())->getLastPictures()
         ]);
     }
 }

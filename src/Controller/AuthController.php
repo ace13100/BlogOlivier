@@ -16,11 +16,13 @@ class AuthController extends AbstractController {
             // On récupère les données du formulaire de connexion, email et password
             $email = trim($_POST['email']);
             $password = $_POST['password'];
-        
+            
             // On crée un objet UserModel pour appeler la méthode checkCredentials() qui va vérifier les identifiants
             $userModel = new UserModel();
             $user = $userModel->checkCredentials($email, $password);
-            $roles = $userModel->getRoles($user['id']);
+            
+            
+            
             
            
             // Aucun utilisateur n'a été trouvé avec ces identifiants
@@ -29,9 +31,10 @@ class AuthController extends AbstractController {
             }
             // On a bien récupéré l'utilisateur, les identifiants sont corrects
             else {
-        
+                
+                $roles = $userModel->getRoles($user['idUser']);
                 // Enregistre le user en session
-                UserSession::register($user['id'], $user['firstname'], $user['lastname'], $user['email'],$roles);
+                UserSession::register($user['idUser'], $user['pseudoUser'],$user['emailUser'],$roles);
         
                 // Message flash de succès
                 FlashBag::addFlash('Connexion réussie');

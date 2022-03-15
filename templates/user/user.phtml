@@ -1,0 +1,69 @@
+
+
+<section class="Add">
+    <h2 class="Add-title">Ajouter Une Image</h2>
+    <form class ="Add-form"action="<?=buildUrl('user_picture_new');?>" method="post" enctype="multipart/form-data">
+   
+                
+   
+    
+    
+    
+    Select image to upload:
+    <input type="file" name="fileToUpload" id="fileToUpload" accept="image/*">
+    
+   
+    <div>
+
+    <textarea type="text" name="description" id="description" value="" placeholder="veuillez donner une descritpion"></textarea>
+    </div>
+    
+   
+    <div class="">
+        <label for="tags">tags</label>
+        <input type="text" name="tags" id="tags" placeholder="tags">
+    </div>
+
+    <input class="Add-form-button" type="submit" value="Upload Image" name="submit">
+    </form>
+
+
+</section>
+<section class="Dashboard">
+    <h2 class="Dashboard-title">Dashboard</h2>
+    <table class="Dashboard-table"> 
+        <thead class="Dashboard-table-head">
+            <th class="Dashboard-table-head-title">Image</th>
+            <th class="Dashboard-table-head-title">Date de création</th>
+            <th class="Dashboard-table-head-title">nom</th>
+            <th class="Dashboard-table-head-title">descritpion</th>
+            <th class="Dashboard-table-head-title">tags</th>
+            <th class="Dashboard-table-head-title">Actions</th>
+        </thead>
+        <tbody class="Dashboard-table-body">
+        <?php var_dump($picturesUser);?>
+            <?php foreach ($picturesUser as $picture): ?>
+                <?php var_dump($picture);?>
+                <tr id="article-<?=$picture['pictureId']?>">
+                    <td id="imageUser"><img src=<?=SITE_BASE_URL."/upload"."/".$picture["namePicture"];?> alt="" srcset=""></td>
+                    <td><?=(new DateTimeImmutable($picture['createdAt']))->format('d/m/Y');?></td>
+                    <td><?=$picture['namePicture']?></td>
+                    <td><?=htmlspecialchars($picture['descriptionPicture']);?></td>
+                    <td><?=htmlspecialchars($picture['tagPicture']);?></td>
+                    <td>
+                        
+                            <a href="<?=buildUrl('admin_article_edit', ['article_id' => $article['article_id']]);?>" title="Modifier"><i class="far fa-edit"></i></a>
+                       
+                            <a href="<?=buildUrl('admin_article_delete', ['article_id' => $article['article_id']]);?>" title="supprimer" class ="delete-button"><i class="far fa-trash-alt"></i></a>
+                        
+                        
+                      
+                        
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+    
+</section>
+<script src="<?=asset('js/admin.js');?>"></script>

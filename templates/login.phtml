@@ -1,14 +1,21 @@
-<form class="signup-form" action="<?=buildUrl('login');?>" method="POST">
-    <fieldset>
-        <legend>Connexion</legend>
-        <div>
-            <label for="email">Email</label>
-            <input type="email" name="email" id="email">
-        </div>
-        <div>
-            <label for="password">Mot de passe</label>
-            <input type="password" name="password" id="password">
-        </div>
-    </fieldset>
-    <input type="submit" value="Enregistrer">
-</form>
+<section class="signup">
+    <p class="signup-title">Log In</p>
+    <form class="signup-form" action="<?=buildUrl('login');?>" method="POST">
+        
+            
+            <div class="signup-form-email">
+                <label for="email">Email</label>
+                <input type="email" name="email" id="email" value="" placeholder="email">
+            </div>
+            <div class="signup-form-password">
+                <label for="password">Password</label>
+                <input type="password" name="password" id="password" placeholder="password">
+            </div>
+            
+            <div id="signup-form-register">
+            <input id="signup-form-register-enter" type="submit" value="connexion">
+            </div>
+        
+    </form>
+
+</section>

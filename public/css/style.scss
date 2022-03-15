@@ -1,0 +1,192 @@
+body{
+    background-color:#222333;
+    margin: 0;
+    min-width: 300px;
+    
+}
+td img{
+    width: 100%;
+    height: 100%;
+}
+#description{
+    width: 100%;
+}
+#imageUser{
+    height: 150px;
+    width: 150px;
+}
+.Add{
+    color: white;
+    &-title{
+        text-align: center;
+    }
+    &-form{
+
+    }
+    &-form div{
+        width: 100%;
+        margin: 15px;
+        
+    }
+}
+.Dashboard{
+    color: white;
+    &-title{
+        text-align: center;
+    }
+    &-table{
+        width: 100%;
+    }
+}
+.message{
+    color: white;
+}
+.signup{
+    margin: 0 auto;
+    margin-top: 0px;
+    width: 50%;
+    background-color: #545564;
+    opacity: 55%;
+    padding: 15px;
+    margin-top: 20%;
+    border-radius: 15px;
+    &-title{
+        text-align: center;
+        color: white;
+        margin: 0;
+        margin-bottom: 25px;
+
+    }
+    &-form div {
+        width: 100%;
+    }
+    &-form div input{
+        width: 100%;
+        margin: 5px;
+        border-style: none;
+        border-radius: 5px;
+        background-color: #2C2F34;
+        
+        color: white;
+    }
+    &-form{
+        
+        &-register-enter{
+            width: 50%;
+
+        }
+    }
+    
+
+
+}
+#signup-form-register-enter{
+    background-color: #AAA7A7;
+    opacity:75%;
+}
+
+.Menu{
+    display: grid;
+    grid-template-columns: 20% 40% 20% 20%;
+    grid-template-rows: 50% 50%;
+    &-logo{
+        grid-column: 1/2;
+        width: 50px;
+        height: 50px;
+        margin: 0;
+        &-img{
+            width: 100%;
+            height: 100%;
+        }
+        
+    }
+    &-login{
+        text-align: center;
+        background-color: #545564;
+        text-decoration: none;
+        opacity: 75%;
+        border-radius: 100%;
+        margin: 10px;
+        padding: 5px;
+        min-width: 20px;
+        grid-column: 3/4;
+        &-lien{
+            text-decoration: none;
+            color: white;
+            font-size: x-small;
+        }
+
+    }
+    &-signup{
+        text-align: center;
+        background-color: #545564;
+        text-decoration: none;
+        opacity: 75%;
+        border-radius: 100%;
+        margin: 10px;
+        padding: 5px;
+        grid-column: 4/5;
+        min-width: 20px;
+        &-lien{
+            text-decoration: none;
+            color: white;
+            font-size: x-small;
+        }
+
+    }
+    &-C
+    {
+        position: relative;
+        grid-row: -1/2;
+        grid-column: 1/5;
+        &-search{
+            
+            text-decoration: none;
+            border-style: none;
+            border-radius: 25px;
+            height: 30px;
+            width: 100%;
+            background-color: #5A5A66;
+            opacity: 50%;
+        }
+        &-button{
+            position: absolute;
+            right: 1px;
+            height: 80%;
+            border-radius: 25px;
+            border-style: none;
+            width: 15px;
+            bottom: 1px;
+            background-color: #3e3e4c;
+            opacity: 70%;
+            background-image: url(../img/loupe.png);
+            background-size: contain;
+            background-position: center;
+            background-repeat: no-repeat;
+
+        }
+    }
+    
+    
+}
+
+@media only screen and (min-width: 650px){
+
+    .signup{
+        margin-top: 10%;
+    }
+    .Menu{
+        display: flex;
+        flex-direction: row;
+        justify-content: space-evenly;
+        &-C{
+            align-self: center;
+            width: 90%;
+            &-button{
+                
+            }
+        }
+
+    }
+
+}

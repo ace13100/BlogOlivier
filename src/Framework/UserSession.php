@@ -14,15 +14,14 @@ class UserSession {
     /**
      * Enregistre les informations de l'utilisateur en session
      */
-    static function register(int $userId, string $firstname, string $lastname, string $email, array $roles)
+    static function register(int $userId, string $pseudo, string $email, array $roles)
     {
         self::sessionCheck();
 
         // Enregistrement des données de l'utilisateur en session à la clé 'user'
         $_SESSION['user'] = [
             'userId' => $userId,
-            'firstname' => $firstname,
-            'lastname' => $lastname,
+            'pseudo' => $pseudo,
             'email' => $email,
             'roles' => $roles
         ];
