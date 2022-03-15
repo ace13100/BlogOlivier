@@ -17,8 +17,12 @@
 
 
 
-
-
+function extractFirstText(str){
+    const matches = str.match(/"(.*?)"/);
+    return matches
+      ? matches[1]
+      : str;
+  }
 
 
 // FONCTIONS //////////////// 
@@ -28,7 +32,7 @@ async function onClickDelete(event)
     event.preventDefault();
     
     // On affiche une boîte de dialogue de confirmation et on récupère la réponse de l'internaute
-    const confirmed = window.confirm('Êtes-vous certain de vouloir supprimer cet article ?');
+    const confirmed = window.confirm('Êtes-vous certain de vouloir supprimer cet image ?');
 
     // Si l'internaute confirme effectivement la suppression
     if (confirmed) {
@@ -38,11 +42,15 @@ async function onClickDelete(event)
         // window.location.replace(this.href);
 
         // VERSION 2 : on envoie une requête AJAX avec la fonction fetch
+        
         const response = await fetch(this.href);
         const id = await response.text();
-        console.log(id);
+        console.log();
+        
         // Lors de la récéption de la réponse, on récupère l'id de l'article supprimé pour supprimer le <tr> correspondant
-        const trElement = document.getElementById('article-' + id);
+        const trElement = document.getElementById("picture-"+extractFirstText(id));
+        console.log(trElement);
+        console.log(trElement.id);
         trElement.remove();
     }
 }

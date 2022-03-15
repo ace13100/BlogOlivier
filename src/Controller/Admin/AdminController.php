@@ -14,13 +14,13 @@ class AdminController extends AbstractController {
      */
     public function index()
     {
-        if(!UserSession::hasRoles('ADMIN','EDITOR')){
+        if(!UserSession::hasRoles('ADMIN')){
             http_response_code(403);
             echo "Acces interdit";
             exit;
         }
         return $this->render('admin/admin', [
-            'pictures' => (new PictureModel())->getLastPictures()
+            'pictures' => (new PictureModel())->getAllPictures()
         ]);
     }
 }

@@ -20,7 +20,7 @@ class UserController extends AbstractController {
         // }
 
         return $this->render('user/user', [
-            'picturesUser' => (new PictureModel())->getAllPictures(UserSession::getId())
+            'picturesUser' => (new PictureModel())->getAllPicturesById(UserSession::getId())
         ]);
     }
 }

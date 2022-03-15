@@ -15,36 +15,62 @@ class PictureController extends AbstractController {
      */
     public function new()
     {
+
+        $pictureModel = new PictureModel();
         // Si le formulaire est soumis 
         if (!empty($_POST)) {
 
+            if(isset($_FILES['fileToUpload'])){
+                $tmpName = $_FILES['fileToUpload']['tmp_name'];
+                $name = trim($_FILES['fileToUpload']['name']);
+                $size = $_FILES['fileToUpload']['size'];
+                $error = $_FILES['fileToUpload']['error'];
+                if($pictureModel->getPictureByName(str_replace(" ","_",$name))){
+                    FlashBag::addFlash('Le champ "name" est deja utiliser par une autre picture', 'error');
+                    
+                } 
+
+                
+                
+               
+                
+            }
             // On récupère les données du formulaire
-            $title = trim($_POST['title']);
-            $content = trim($_POST['content']);
-            $category = intval($_POST['category']);
+            $description = $_POST['description'];
+            $tags = $_POST['tags'];
+
+
+            
+            
 
             // On valide les données
-            if (!$title) {
-                FlashBag::addFlash('Le champ "Titre" est obligatoire', 'error');
+            // On valide les données
+            if (!$name) {
+                FlashBag::addFlash('Le champ "name" est obligatoire', 'error');
             }
 
-            if (!$content) {
-                FlashBag::addFlash('Le champ "Contenu" est obligatoire', 'error');
+            if (!$tags) {
+                FlashBag::addFlash('Le champ "tags" est obligatoire', 'error');
             }
 
-            if (!$category) {
-                FlashBag::addFlash('Le champ "Catégorie" est obligatoire', 'error');
+            if (!$description) {
+                FlashBag::addFlash('Le champ "description" est obligatoire', 'error');
             }
 
             // Si aucune erreur
             if (!FlashBag::hasMessages('error')) {
 
                 // On enregistre les données dans la base
-                $articleModel = new PictureModel();
-                $articleModel->insert($title, $content, $category, UserSession::getId());
+                if(!file_exists("upload")){
+                    mkdir("upload",0777, true);
+                }
+                if(is_uploaded_file($tmpName) ){
+                    move_uploaded_file($tmpName,"upload"."/".str_replace(" ","_",$name));
+                }
+                $pictureModel->insert($size, str_replace(" ","_",$name), $description, $tags,UserSession::getId());
 
                 // Message flash
-                FlashBag::addFlash('Article ajouté avec succès.');
+                FlashBag::addFlash('Picture ajouté avec succès.');
 
                 // Redirection vers le dashboard admin
                 $this->redirect('admin');
@@ -52,121 +78,150 @@ class PictureController extends AbstractController {
         }
 
         // Dans tous les cas... il faut aller chercher les catégories pour afficher la liste déroulante
-        $categoryModel = new CategoryModel();
-        $categories = $categoryModel->getAllCategories();
+       
 
         // Affichage du template
-        return $this->render('admin/article/new', [
-            'categories' => $categories,
-            'title' => $title??'',
-            'content' => $content??'',
-            'selectedCategory' => $category??null
+        return $this->render('user/user', [
+            'name' => $name??'',
+            'description' => $description??'',
+            'tags' => $tags??null,
+            'picturesUser' => (new PictureModel())->getAllPicturesById(UserSession::getId())
         ]);
     }
 
 
-    /**
-     * Modification d'un nouvel article
-     */
     public function edit()
     {
-        // Validation de l'id de l'article dans l'URL
-        if (!array_key_exists('article_id', $_GET) || ! isset($_GET['article_id']) || !ctype_digit($_GET['article_id'])){
+        
+        
+        
+         
+
+
+
+        
+        // Si le formulaire est soumis 
+        if (!empty($_POST)) {
+            
+
+            
+            
+           
+
+            // On récupère les données du formulaire
+            $pictureModel = new PictureModel();
+            $description = trim($_POST['description']);
+            $tags = trim($_POST['tags']);
+            $name =str_replace(" ","_",trim($_POST['name'])) ;
+            $pictureId = (int) $_GET['idPicture'];
+            
+            
+
+            // On valide les données
+            if (!$name) {
+                FlashBag::addFlash('Le champ "name" est obligatoire', 'error');
+            }
+
+            if (!$tags) {
+                FlashBag::addFlash('Le champ "tags" est obligatoire', 'error');
+            }
+
+            if (!$description) {
+                FlashBag::addFlash('Le champ "description" est obligatoire', 'error');
+            }
+            if($pictureModel->getPictureByName($name)){
+                FlashBag::addFlash('Le champ "name" est deja utiliser par une autre picture', 'error');
+                
+            } 
+
+            // Si aucune erreur
+            if (!FlashBag::hasMessages('error')) {
+                
+                // On enregistre les données dans la base
+                $firstName = $pictureModel->getOnePicture($pictureId)['namePicture'];
+                
+                if(!strrchr($name,".")){
+
+                    $type = strrchr($firstName,".");
+                    rename(UPLOAD_DIR."/".$firstName,UPLOAD_DIR."/".$name.$type);
+
+                    $pictureModel->update($name.$type,$description,$tags,$pictureId);
+
+                }
+                else{
+                    rename(UPLOAD_DIR."/".$firstName,UPLOAD_DIR."/".$name);
+                    $pictureModel->update($name,$description,$tags,$pictureId);
+                }
+                
+                
+                
+                
+                
+                // Message flash
+                FlashBag::addFlash('Picture modifié avec succès.');
+                
+                // Redirection vers le dashboard user
+                $this->redirect('admin');
+            }
+            
+        }
+        if (!array_key_exists('idPicture', $_GET) || !isset($_GET['idPicture']) || !ctype_digit($_GET['idPicture'])){
             http_response_code(404); // On modifie le code de status de la réponse HTTP 
             echo '404 NOT FOUND'; // On affiche un message à l'internaute
             exit; // On arrête le script PHP, on n'a plus rien à faire ! 
         }
 
         // Sélection de l'id de l'article dans l'URL et conversion en entier
-        $articleId = (int) $_GET['article_id'];
+        $pictureId = (int) $_GET['idPicture'];
 
-        // Création d'un objet ArticleModel dont on aura besoin dans tous les cas
-        $articleModel = new PictureModel();
-
-        // Si le formulaire est soumis... 
-        if (!empty($_POST)) {
-
-            // On récupère les données du formulaire
-            $title = trim($_POST['title']);
-            $content = trim($_POST['content']);
-            $category = intval($_POST['category']);
-
-            // On valide les données
-            if (!$title) {
-                FlashBag::addFlash('Le champ "Titre" est obligatoire', 'error');
-            }
-
-            if (!$content) {
-                FlashBag::addFlash('Le champ "Contenu" est obligatoire', 'error');
-            }
-
-            if (!$category) {
-                FlashBag::addFlash('Le champ "Catégorie" est obligatoire', 'error');
-            }
-
-            // Si aucune erreur
-            if (!FlashBag::hasMessages('error')) {
-
-                // On enregistre les données dans la base
-                $articleModel->update($title, $content, $category, $articleId);
-
-                // Message flash
-                FlashBag::addFlash('Article modifié avec succès.');
-
-                // Redirection vers le dashboard admin
-                $this->redirect('admin');
-            }
-        }
-
-
-
-        // Dans tous les cas... il faut aller chercher les catégories pour afficher la liste déroulante
-        $categoryModel = new CategoryModel();
-        $categories = $categoryModel->getAllCategories();
-
-        // Et on a besoin des données de l'article à modifier pour pré remplir le formulaire
-        $article = $articleModel->getOneArticle($articleId);
-
-        if (!$article){
-            http_response_code(404); // On modifie le code de status de la réponse HTTP 
-            echo '404 NOT FOUND'; // On affiche un message à l'internaute
-            exit; // On arrête le script PHP, on n'a plus rien à faire ! 
-        }
-
-        return $this->render('admin/article/edit', [
-            'articleId' => $article['article_id'],
-            'categories' => $categories,
-            'title' => $title ?? $article['title'], // Soit on prend la valeur du formulaire si elle existe, soit la valeur de la BDD
-            'content' => $content ?? $article['content'],
-            'selectedCategory' => $category ?? $article['category_id']
+        
+        $pictureModel = new PictureModel();
+        $name = $pictureModel->getOnePicture($pictureId)['namePicture'];
+        $description = $pictureModel->getOnePicture($pictureId)['descriptionPicture'];
+        $tags = $pictureModel->getOnePicture($pictureId)['tagPicture'];
+        
+        // Affichage du template
+        return $this->render('admin/picture/edit', [
+            'name' => $name??'',
+            'description' => $description??'',
+            'tags' => $tags??'',
+            'idPicture' => $pictureId??''
+            
         ]);
+        
+        // Dans tous les cas... il faut aller chercher les catégories pour afficher la liste déroulante
+        
     }
+
 
 
     /**
      * Suppression d'un article
      */
-    public function delete()
-    {
+    public function delete(){
+        var_dump($_GET['idPicture']);
         // Validation de l'id de l'article dans l'URL
-        if (!array_key_exists('article_id', $_GET) || ! isset($_GET['article_id']) || !ctype_digit($_GET['article_id'])){
+        if (!array_key_exists('idPicture', $_GET) || ! isset($_GET['idPicture']) || !ctype_digit($_GET['idPicture'])){
             http_response_code(404); // On modifie le code de status de la réponse HTTP 
             echo '404 NOT FOUND'; // On affiche un message à l'internaute
             exit; // On arrête le script PHP, on n'a plus rien à faire ! 
         }
 
         // Sélection de l'id de l'article dans l'URL et conversion en entier
-        $articleId = (int) $_GET['article_id'];
+        $pictureId = (int) $_GET['idPicture'];
 
         // Suppression de l'article
-        $articleModel = new PictureModel();
-        $articleModel->delete($articleId);
-
+        $pictureModel = new PictureModel();
+        
+        
+        // $file = basename(__DIR__.'/public/upload/'.$pictureModel->getOnePicture($pictureId)['namePicture']);
+        unlink(UPLOAD_DIR.'/'.$pictureModel->getOnePicture($pictureId)['namePicture']);
         // Message flash
+        $pictureModel->delete($pictureId);
         FlashBag::addFlash('Article supprimé');
-
+        
         // On retourne l'id en réponse à la requête AJAX
-        echo $articleId;
+        echo "picture-".$pictureId;
         exit;
     }
 }

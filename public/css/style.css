@@ -4,6 +4,18 @@ body {
   min-width: 300px;
 }
 
+.fa-edit {
+  color: white;
+}
+
+.fa-trash-alt {
+  color: white;
+}
+
+td {
+  text-align: center;
+}
+
 td img {
   width: 100%;
   height: 100%;
@@ -86,9 +98,10 @@ td img {
 }
 .Menu-logo {
   grid-column: 1/2;
-  width: 50px;
-  height: 50px;
+  width: 150px;
+  height: 150px;
   margin: 0;
+  align-self: center;
 }
 .Menu-logo-img {
   width: 100%;
@@ -100,15 +113,18 @@ td img {
   text-decoration: none;
   opacity: 75%;
   border-radius: 100%;
-  margin: 10px;
-  padding: 5px;
+  height: 60px;
+  width: 60px;
   min-width: 20px;
   grid-column: 3/4;
+  align-self: center;
 }
 .Menu-login-lien {
+  display: inline-block;
   text-decoration: none;
   color: white;
   font-size: x-small;
+  margin-top: 35%;
 }
 .Menu-signup {
   text-align: center;
@@ -116,20 +132,24 @@ td img {
   text-decoration: none;
   opacity: 75%;
   border-radius: 100%;
-  margin: 10px;
-  padding: 5px;
+  height: 60px;
+  width: 60px;
   grid-column: 4/5;
   min-width: 20px;
+  align-self: center;
 }
 .Menu-signup-lien {
+  display: inline-block;
   text-decoration: none;
   color: white;
   font-size: x-small;
+  margin-top: 35%;
 }
 .Menu-C {
   position: relative;
   grid-row: -1/2;
   grid-column: 1/5;
+  align-self: center;
 }
 .Menu-C-search {
   text-decoration: none;
@@ -168,6 +188,6 @@ td img {
   }
   .Menu-C {
     align-self: center;
-    width: 90%;
+    width: 60%;
   }
 }/*# sourceMappingURL=style.css.map */

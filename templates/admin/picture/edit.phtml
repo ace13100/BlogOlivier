@@ -1,0 +1,27 @@
+<h2>Modifier une Picture</h2>
+    
+    <!-- Route vers laquelle on cree le lien -->
+    <form class="Add-form" action="<?=buildUrl('admin_picture_edit', ['idPicture' => $idPicture]);?>" method="post">
+
+       
+    
+    <div class="">
+        <label for="name">changez de nom</label>
+        <input type="text" name="name" id="name" value="<?=$name?>" placeholder="name">
+    </div>
+    
+    <div>
+
+    <textarea type="text" name="description" id="description"  placeholder="veuillez donner une descritpion"></textarea>
+    </div>
+    
+   
+    <div class="">
+        <label for="tags">tags</label>
+        <input type="text" name="tags" id="tags" value="<?=$tags?>" placeholder="tags">
+    </div>
+
+    
+    <input type="submit" value="Valider">
+    </form>
+</section>
